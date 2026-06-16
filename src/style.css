@@ -1,109 +1,30 @@
 @import 'tailwindcss';
-/* 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
+
+
+.container-form{
+  @apply overflow-hidden rounded-xl border border-gray-200 bg-white;
 }
 
-body {
-    min-height: 100vh;
-    background: #efb4b4;
-    padding: 12px;
+.label-form{
+  @apply mb-6 block text-base font-medium text-gray-900;
 }
 
-
-section {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
+.input-text{
+  @apply w-full max-w-[80%] border-b border-gray-500 py-2 text-sm text-gray-900 outline-none focus:border-pink-500;
 }
 
-.search-bar {
-    display: grid;
-    width: 100%;
-    gap: 12px;
-    grid-template-columns: 1fr auto;
-    padding: 24px;
-    border-radius: 16px;
-    background: #99ac8b;
-    height: auto;
-    align-items: center;
+.label-radio{
+  @apply flex h-full w-full cursor-pointer items-center gap-2.5 text-sm text-gray-900;
 }
 
-.search {
-    width: 100%;
-    height: 40px;
-    border-radius: 8px;
-    border: none;
-    padding: 12px;
-    font-size: 16px;
-    font-weight: 500;
+.input-radio{
+  @apply h-5 w-5 cursor-pointer accent-pink-500 h-5 w-5 cursor-pointer accent-pink-500;
 }
 
-.cari-data {
-    height: 40px;
-    border: none;
-    border-radius: 8px;
-    background: #7358b1;
-    color: white;
-    font-size: 14px;
-    padding: 0 20px;
-    cursor: pointer;
-    font-weight: bold;
+.btn{
+  @apply cursor-pointer rounded border-none text-sm font-medium;
 }
 
-.cari-data:hover {
-    background: #4c4263;
+.row-container{
+  @apply border border-gray-300 p-3;
 }
-
-.tampil-data {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-
-.item {
-    width: 100%;
-    display: grid;
-    gap: 4px;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.item-img {
-    width: 100%;
-    display: flex;
-}
-
-.item-img img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px 8px 0 0;
-}
-
-.item-name {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 12px;
-    background: white;
-    color: black;
-    font-size: 16px;
-    font-weight: bold;
-    min-height: 50px;
-}
-
-@media (max-width: 600px) {
-    .tampil-data {
-        grid-template-columns: 1fr;
-    }
-
-    .search-bar {
-        grid-template-columns: 1fr;
-    }
-} */

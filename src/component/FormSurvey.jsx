@@ -151,8 +151,8 @@ function createResponseData(data) {
  * @returns {SurveyResponse[]} Saved survey responses.
  */
 function getSurveyResponses() {
-    const savedData = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || [];
-    return savedData;
+  const savedData = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || [];
+  return savedData;
 }
 
 /**
@@ -288,7 +288,7 @@ function SurveyForm() {
         className="my-4 grid w-full max-w-2xl justify-center gap-2"
         onSubmit={handleSubmit(onSubmit, onInvalid)}
       >
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="container-form">
           <div className="h-2.5 w-full bg-pink-500"></div>
 
           <div className="p-6">
@@ -302,10 +302,10 @@ function SurveyForm() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="container-form">
           <div className="p-6">
             <label
-              className="mb-6 block text-base font-medium text-gray-900"
+              className="label-form"
               htmlFor="name"
             >
               Siapa nama anda?
@@ -315,16 +315,16 @@ function SurveyForm() {
               id="name"
               type="text"
               placeholder="Your Answer"
-              className="w-full max-w-[80%] border-b border-gray-500 py-2 text-sm text-gray-900 outline-none focus:border-pink-500"
+              className="input-text"
               {...register("name")}
             />
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="container-form">
           <div className="p-6">
             <label
-              className="mb-6 block text-base font-medium text-gray-900"
+              className="label-form"
               htmlFor="age"
             >
               Berapa umur anda?
@@ -334,15 +334,15 @@ function SurveyForm() {
               id="age"
               type="number"
               placeholder="Your Answer"
-              className="w-full max-w-[80%] border-b border-gray-500 py-2 text-sm text-gray-900 outline-none focus:border-pink-500"
+              className="input-text"
               {...register("age")}
             />
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="container-form">
           <div className="p-6">
-            <p className="mb-6 block text-base font-medium text-gray-900">
+            <p className="label-form">
               Apa jenis kelamin anda?
             </p>
 
@@ -351,13 +351,13 @@ function SurveyForm() {
                 <label
                   key={gender.id}
                   htmlFor={gender.id}
-                  className="flex h-full w-full cursor-pointer items-center gap-2.5 text-sm text-gray-900"
+                  className="label-radio"
                 >
                   <input
                     id={gender.id}
                     type="radio"
                     value={gender.value}
-                    className="h-5 w-5 cursor-pointer accent-pink-500"
+                    className="input-radio"
                     {...register("gender")}
                   />
 
@@ -370,9 +370,9 @@ function SurveyForm() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="container-form">
           <div className="p-6">
-            <p className="mb-6 block text-base font-medium text-gray-900">
+            <p className="label-form">
               Apakah anda Perokok?
             </p>
 
@@ -381,13 +381,13 @@ function SurveyForm() {
                 <label
                   key={smoke.id}
                   htmlFor={smoke.id}
-                  className="flex h-full w-full cursor-pointer items-center gap-2.5 text-sm text-gray-900"
+                  className="label-radio"
                 >
                   <input
                     id={smoke.id}
                     type="radio"
                     value={smoke.value}
-                    className="h-5 w-5 cursor-pointer accent-pink-500"
+                    className="input-radio"
                     {...register("smoke")}
                   />
 
@@ -400,9 +400,9 @@ function SurveyForm() {
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+        <div className="container-form">
           <div className="p-6">
-            <p className="mb-6 block text-base font-medium text-gray-900">
+            <p className="label-form">
               Jika anda perokok, rokok apa yang anda pernah coba?
             </p>
 
@@ -411,11 +411,10 @@ function SurveyForm() {
                 <label
                   key={merk.id}
                   htmlFor={merk.id}
-                  className={`flex h-full w-full items-center gap-2.5 text-sm text-gray-900 ${
-                    isSmoker
+                  className={`flex h-full w-full items-center gap-2.5 text-sm text-gray-900 ${isSmoker
                       ? "cursor-pointer"
                       : "cursor-not-allowed opacity-50"
-                  }`}
+                    }`}
                 >
                   <input
                     id={merk.id}
@@ -439,14 +438,14 @@ function SurveyForm() {
           <div className="flex gap-3">
             <button
               type="submit"
-              className="cursor-pointer rounded border-none bg-pink-500 px-6 py-2.5 text-sm font-medium text-white hover:bg-pink-600"
+              className="btn bg-pink-500 px-6 py-2.5 text-white hover:bg-pink-600"
             >
               Submit
             </button>
 
             <Link
               to="/response"
-              className="cursor-pointer rounded border-none bg-pink-500 px-6 py-2.5 text-sm font-medium text-white no-underline hover:bg-pink-600"
+              className="btn bg-pink-500 px-6 py-2.5 text-white no-underline hover:bg-pink-600"
             >
               Lihat Data
             </Link>
@@ -455,7 +454,7 @@ function SurveyForm() {
           <button
             type="button"
             onClick={handleResetForm}
-            className="ml-auto cursor-pointer rounded border-none bg-transparent px-4 py-2.5 text-sm font-medium text-pink-500 transition-colors duration-200 hover:bg-pink-100"
+            className="ml-auto btn bg-transparent px-4 py-2.5 text-pink-500 transition-colors duration-200 hover:bg-pink-100"
           >
             Reset
           </button>

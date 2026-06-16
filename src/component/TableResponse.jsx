@@ -79,12 +79,12 @@ function TableResponse() {
           <table className="w-full border-collapse border border-gray-200 text-sm">
             <thead>
               <tr className="bg-purple-700 text-white">
-                <th className="border border-gray-300 p-3">No</th>
-                <th className="border border-gray-300 p-3">Nama</th>
-                <th className="border border-gray-300 p-3">Umur</th>
-                <th className="border border-gray-300 p-3">Jenis Kelamin</th>
-                <th className="border border-gray-300 p-3">Perokok</th>
-                <th className="border border-gray-300 p-3">Merk Rokok</th>
+                <th className="row-container">No</th>
+                <th className="row-container">Nama</th>
+                <th className="row-container">Umur</th>
+                <th className="row-container">Jenis Kelamin</th>
+                <th className="row-container">Perokok</th>
+                <th className="row-container">Merk Rokok</th>
               </tr>
             </thead>
 
@@ -101,22 +101,22 @@ function TableResponse() {
               ) : (
                 surveyResponses.map((data, index) => (
                   <tr key={`${data.name}-${index}`} className={getRowClassName(index)}>
-                    <td className="border border-gray-300 p-3">
+                    <td className="row-container">
                       {index + 1}
                     </td>
-                    <td className="border border-gray-300 p-3">
+                    <td className="row-container">
                       {data.name}
                     </td>
-                    <td className="border border-gray-300 p-3">
+                    <td className="row-container">
                       {data.age}
                     </td>
-                    <td className="border border-gray-300 p-3">
+                    <td className="row-container">
                       {data.gender || "-"}
                     </td>
-                    <td className="border border-gray-300 p-3">
+                    <td className="row-container">
                       {data.smoke || "-"}
                     </td>
-                    <td className="border border-gray-300 p-3">
+                    <td className="row-container">
                       {data.merkSmoke || "-"}
                     </td>
                   </tr>
@@ -137,7 +137,7 @@ function TableResponse() {
           <button
             type="button"
             onClick={handleClearData}
-            className="cursor-pointer rounded border-none bg-red-600 px-4 py-2.5 text-sm font-bold text-white hover:bg-red-700"
+            className="btn bg-red-600 px-4 py-2.5 font-bold text-white hover:bg-red-700"
           >
             Hapus Semua Data
           </button>
