@@ -3,6 +3,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router";
+import { useDispatch } from 'react-redux';
+import { addFormData } from '../redux/reducers/formSlice';
 
 /**
  * @typedef {Object} SurveyFormValues
@@ -22,7 +24,7 @@ import { Link, useNavigate } from "react-router";
  * @property {string} merkSmoke - Cigarette brands in string format.
  */
 
-const STORAGE_KEY = "surveyResponses";
+// const STORAGE_KEY = "surveyResponses";
 
 const genderOptions = [
   {
@@ -133,27 +135,27 @@ function checkIsSmoker(smokeValue) {
  * @param {SurveyFormValues} data - Data from React Hook Form.
  * @returns {SurveyResponse} Normalized survey response data.
  */
-function createResponseData(data) {
-  const merkSmoke = Array.isArray(data.merkSmoke) ? data.merkSmoke : [];
+// function createResponseData(data) {
+//   const merkSmoke = Array.isArray(data.merkSmoke) ? data.merkSmoke : [];
 
-  return {
-    name: data.name,
-    age: data.age,
-    gender: data.gender,
-    smoke: data.smoke,
-    merkSmoke: data.smoke === "Ya" ? merkSmoke.join(", ") : "",
-  };
-}
+//   return {
+//     name: data.name,
+//     age: data.age,
+//     gender: data.gender,
+//     smoke: data.smoke,
+//     merkSmoke: data.smoke === "Ya" ? merkSmoke.join(", ") : "",
+//   };
+// }
 
 /**
  * Gets saved survey responses from localStorage.
  *
  * @returns {SurveyResponse[]} Saved survey responses.
  */
-function getSurveyResponses() {
-  const savedData = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || [];
-  return savedData;
-}
+// function getSurveyResponses() {
+//   const savedData = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || [];
+//   return savedData;
+// }
 
 /**
  * Saves a new survey response to localStorage.
@@ -161,13 +163,13 @@ function getSurveyResponses() {
  * @param {SurveyResponse} responseData - New survey response data.
  * @returns {void}
  */
-function saveSurveyResponse(responseData) {
-  const existingData = getSurveyResponses();
+// function saveSurveyResponse(responseData) {
+//   const existingData = getSurveyResponses();
 
-  existingData.push(responseData);
+//   existingData.push(responseData);
 
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(existingData));
-}
+//   window.localStorage.setItem(STORAGE_KEY, JSON.stringify(existingData));
+// }
 
 /**
  * Gets the first error message from React Hook Form errors.
@@ -184,6 +186,7 @@ function getFirstErrorMessage(errors) {
 function SurveyForm() {
   const navigate = useNavigate();
   const [modalMessage, setModalMessage] = React.useState("");
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -243,9 +246,14 @@ function SurveyForm() {
    */
   function onSubmit(data) {
     try {
-      const responseData = createResponseData(data);
+      // const responseData = createResponseData(data);
 
-      saveSurveyResponse(responseData);
+      // saveSurveyResponse(responseData);
+      const responseData = {
+        id: crypto.randomUUID(),
+        ...data,
+      };
+      dispatch(addFormData(responseData));
 
       navigate("/response");
     } catch (error) {
@@ -412,8 +420,8 @@ function SurveyForm() {
                   key={merk.id}
                   htmlFor={merk.id}
                   className={`flex h-full w-full items-center gap-2.5 text-sm text-gray-900 ${isSmoker
-                      ? "cursor-pointer"
-                      : "cursor-not-allowed opacity-50"
+                    ? "cursor-pointer"
+                    : "cursor-not-allowed opacity-50"
                     }`}
                 >
                   <input
