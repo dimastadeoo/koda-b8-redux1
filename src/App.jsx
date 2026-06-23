@@ -4,6 +4,7 @@ import TableResponse from './component/TableResponse';
 
 import { Provider } from 'react-redux';
 import store from './redux/store';
+import ModalGlobal from './component/ModalGlobal';
 
 
 // Konfigurasi Peta Rute URL halaman
@@ -24,6 +25,7 @@ function App() {
   return (
   <Provider store={store}>
     <RouterProvider router={router} />
+    <ModalGlobal />
   </Provider>
   )
 }
