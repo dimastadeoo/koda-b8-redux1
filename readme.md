@@ -1,8 +1,8 @@
-# Membuat halaman dengan react, Form Handling dengan react hook & yup
+# Implementasi penyimpanan di store dengan Redux
 
-## berikut merupakan review survey perokok dan table response 
+## berikut merupakan review survey perokok dan table response yang menggunakan store untuk penyimpanan data
 
-ini merupakan form survey perokok dengan table response, dimana data yang diinput akan disimpan ke local storage. untuk form handling menggunakan react hook from & yup library, dan untuk JS DOM sudah dibuatkan dokumentasi dengan js docs
+ini merupakan form survey perokok dengan table response, dimana data yang diinput akan disimpan ke Store, pada fitur redux, reducers untuk form menggunakan action add dan juga remove. untuk form handling menggunakan react hook from & yup library, dan untuk JS DOM sudah dibuatkan dokumentasi dengan js docs
 
 ## Screenshot
 
