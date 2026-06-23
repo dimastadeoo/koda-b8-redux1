@@ -1,5 +1,7 @@
-import React from "react";
+// import React from "react";
 import { Link } from "react-router";
+import { useDispatch, useSelector } from 'react-redux';
+import { clearAllData, removeFormData } from "../redux/reducers/formSlice";
 
 /**
  * @typedef {Object} SurveyResponse
@@ -10,26 +12,26 @@ import { Link } from "react-router";
  * @property {string} merkSmoke - Cigarette brands in string format.
  */
 
-const STORAGE_KEY = "surveyResponses";
+// const STORAGE_KEY = "surveyResponses";
 
 /**
  * Gets saved survey responses from localStorage.
  *
  * @returns {SurveyResponse[]} Saved survey responses.
  */
-function getSurveyResponses() {
-  const savedData = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || [];
-  return savedData;
-}
+// function getSurveyResponses() {
+//   const savedData = JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || [];
+//   return savedData;
+// }
 
 /**
  * Removes all saved survey responses from localStorage.
  *
  * @returns {void}
  */
-function clearSurveyResponses() {
-  window.localStorage.removeItem(STORAGE_KEY);
-}
+// function clearSurveyResponses() {
+//   window.localStorage.removeItem(STORAGE_KEY);
+// }
 
 /**
  * Gets table row style based on row index.
@@ -46,27 +48,48 @@ function getRowClassName(index) {
 }
 
 function TableResponse() {
-  const [surveyResponses, setSurveyResponses] = React.useState(() =>
-    getSurveyResponses()
-  );
+  const formData = useSelector((state) => state.form.data);
+  const dispatch = useDispatch()
+
+  const handleDelete = (id) => {
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data ini?"
+    );
+
+    if (!isConfirmed) {
+      return;
+    }
+    dispatch(removeFormData(id));
+  };
+
+  const handleDeleteAll = () => {
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus semua data survey?"
+    );
+    
+    if (!isConfirmed) {
+      return;
+    }
+    dispatch(clearAllData());
+  };
 
   /**
    * Handles clearing all survey response data.
    *
    * @returns {void}
    */
-  function handleClearData() {
-    const isConfirmed = window.confirm(
-      "Apakah Anda yakin ingin menghapus semua data survey?"
-    );
+  // function handleClearData() {
+  //   const isConfirmed = window.confirm(
+  //     "Apakah Anda yakin ingin menghapus semua data survey?"
+  //   );
 
-    if (!isConfirmed) {
-      return;
-    }
+  //   if (!isConfirmed) {
+  //     return;
+  //   }
 
-    clearSurveyResponses();
-    setSurveyResponses([]);
-  }
+  //   clearSurveyResponses();
+  //   setSurveyResponses([]);
+  // }
 
   return (
     <main className="min-h-screen bg-pink-200 p-6 font-sans">
@@ -85,11 +108,12 @@ function TableResponse() {
                 <th className="row-container">Jenis Kelamin</th>
                 <th className="row-container">Perokok</th>
                 <th className="row-container">Merk Rokok</th>
+                <th className="row-container">Action</th>
               </tr>
             </thead>
 
             <tbody>
-              {surveyResponses.length === 0 ? (
+              {formData.length === 0 ? (
                 <tr>
                   <td
                     colSpan="6"
@@ -99,8 +123,8 @@ function TableResponse() {
                   </td>
                 </tr>
               ) : (
-                surveyResponses.map((data, index) => (
-                  <tr key={`${data.name}-${index}`} className={getRowClassName(index)}>
+                formData.map((data, index) => (
+                  <tr key={`${data.id}-${index}`} className={getRowClassName(index)}>
                     <td className="row-container">
                       {index + 1}
                     </td>
@@ -117,7 +141,10 @@ function TableResponse() {
                       {data.smoke || "-"}
                     </td>
                     <td className="row-container">
-                      {data.merkSmoke || "-"}
+                      {data.merkSmoke.join(', ') || "-"}
+                    </td>
+                    <td className="row-container flex justify-center">
+                      <button className="rounded bg-red-500 px-2 py-1.5 cursor-pointer" onClick={() => handleDelete(data.id)}>Hapus</button>
                     </td>
                   </tr>
                 ))
@@ -136,7 +163,7 @@ function TableResponse() {
 
           <button
             type="button"
-            onClick={handleClearData}
+            onClick={handleDeleteAll}
             className="btn bg-red-600 px-4 py-2.5 font-bold text-white hover:bg-red-700"
           >
             Hapus Semua Data
