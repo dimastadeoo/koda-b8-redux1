@@ -2,6 +2,7 @@
 import { Link } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
 import { clearAllData, removeFormData } from "../redux/reducers/formSlice";
+import { showModal } from '../redux/reducers/modalSlice';
 
 /**
  * @typedef {Object} SurveyResponse
@@ -52,25 +53,24 @@ function TableResponse() {
   const dispatch = useDispatch()
 
   const handleDelete = (id) => {
-    const isConfirmed = window.confirm(
-      "Apakah Anda yakin ingin menghapus data ini?"
-    );
-
-    if (!isConfirmed) {
-      return;
-    }
-    dispatch(removeFormData(id));
+    dispatch(
+      showModal({
+        type: 'confirm',
+        message: 'Yakin hapus data ini?',
+        onConfirm: () => dispatch(removeFormData(id)),
+      })
+    )
   };
 
   const handleDeleteAll = () => {
-    const isConfirmed = window.confirm(
-      "Apakah Anda yakin ingin menghapus semua data survey?"
-    );
-    
-    if (!isConfirmed) {
-      return;
-    }
-    dispatch(clearAllData());
+    dispatch(
+      showModal({
+        type: 'confirm',
+        message: 'Yakin hapus data ini?',
+        onConfirm: () => dispatch(clearAllData()),
+      })
+    )
+
   };
 
   /**

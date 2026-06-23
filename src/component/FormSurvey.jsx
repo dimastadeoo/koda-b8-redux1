@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { Link, useNavigate } from "react-router";
 import { useDispatch } from 'react-redux';
 import { addFormData } from '../redux/reducers/formSlice';
+import { showModal } from '../redux/reducers/modalSlice';
 
 /**
  * @typedef {Object} SurveyFormValues
@@ -185,7 +186,7 @@ function getFirstErrorMessage(errors) {
 
 function SurveyForm() {
   const navigate = useNavigate();
-  const [modalMessage, setModalMessage] = React.useState("");
+  // const [modalMessage, setModalMessage] = React.useState("");
   const dispatch = useDispatch();
 
   const {
@@ -219,24 +220,24 @@ function SurveyForm() {
     }
   }, [isSmoker, setValue]);
 
-  /**
-   * Shows the error message modal.
-   *
-   * @param {string} message - Message to display in the modal.
-   * @returns {void}
-   */
-  function showModal(message) {
-    setModalMessage(message);
-  }
+  // /**
+  //  * Shows the error message modal.
+  //  *
+  //  * @param {string} message - Message to display in the modal.
+  //  * @returns {void}
+  //  */
+  // function showModal(message) {
+  //   setModalMessage(message);
+  // }
 
   /**
    * Closes the error message modal.
    *
    * @returns {void}
-   */
-  function closeModal() {
-    setModalMessage("");
-  }
+  //  */
+  // function closeModal() {
+  //   setModalMessage("");
+  // }
 
   /**
    * Handles the form submission when validation succeeds.
@@ -244,21 +245,26 @@ function SurveyForm() {
    * @param {SurveyFormValues} data - Valid form data.
    * @returns {void}
    */
+  // Fungsi submit yang sebenarnya (disimpan setelah konfirmasi)
+  const handleSubmitData = (data) => {
+    const newData = {
+      id: crypto.randomUUID(),
+      ...data,
+    };
+    dispatch(addFormData(newData));
+    navigate('/response');
+  };
+
+  // Handler untuk onSubmit dari react-hook-form
   function onSubmit(data) {
-    try {
-      // const responseData = createResponseData(data);
-
-      // saveSurveyResponse(responseData);
-      const responseData = {
-        id: crypto.randomUUID(),
-        ...data,
-      };
-      dispatch(addFormData(responseData));
-
-      navigate("/response");
-    } catch (error) {
-      showModal("Data gagal disimpan. Silakan coba lagi. " + error);
-    }
+    // Tampilkan modal konfirmasi dengan callback
+    dispatch(
+      showModal({
+        type: 'confirm',
+        message: 'Apakah Anda yakin data sudah benar dan ingin menyimpan?',
+        onConfirm: () => handleSubmitData(data), // callback akan dijalankan saat user klik Konfirmasi
+      })
+    );
   }
 
   /**
@@ -269,8 +275,10 @@ function SurveyForm() {
    */
   function onInvalid(formErrors) {
     const errorMessage = getFirstErrorMessage(formErrors);
-
-    showModal(errorMessage);
+    dispatch(showModal({
+      type: 'alert',
+      message: errorMessage
+    }));
   }
 
   /**
@@ -287,7 +295,6 @@ function SurveyForm() {
       merkSmoke: [],
     });
 
-    closeModal();
   }
 
   return (
@@ -469,7 +476,7 @@ function SurveyForm() {
         </div>
       </form>
 
-      {modalMessage && (
+      {/* {modalMessage && (
         <div
           onClick={closeModal}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
@@ -491,7 +498,7 @@ function SurveyForm() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       <footer className="mt-6 flex w-full max-w-2xl flex-col items-center gap-2 pb-6">
         <p className="text-center text-xs leading-relaxed text-gray-500">
